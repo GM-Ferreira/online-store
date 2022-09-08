@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import Categories from '../components/Categories';
 
 class Home extends React.Component {
   state = {
@@ -11,6 +12,7 @@ class Home extends React.Component {
     return (
       <div>
         <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
+        <Categories />
         <label htmlFor="busca">
           <input type="text" id="busca" />
         </label>

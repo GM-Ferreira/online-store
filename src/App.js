@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
-import Home from './components/Home';
+import Home from './pages/Home';
+import Cart from './pages/Cart';
 
 class App extends React.Component {
   render() {
@@ -8,7 +9,7 @@ class App extends React.Component {
       <div>
         <BrowserRouter>
           <Route exact path="/" component={ Home } />
-          <p>app</p>
+          <Route exact path="/Cart" component={ Cart } />
         </BrowserRouter>
       </div>
     );

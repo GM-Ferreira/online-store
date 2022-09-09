@@ -1,24 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import Categories from '../components/Categories';
-import { getProductsFromCategoryAndQuery } from '../services/api';
+import { getProductsFromQuery, getProductsFromCategory } from '../services/api';
 
 class Home extends React.Component {
   state = {
     searchResults: [],
-    query: '',
+    queryOrCategory: '',
     hasQueryInput: false,
   };
 
-  getQuery = ({ target: { value } }) => {
+  getQueryOrCategory = ({ target: { value } }) => {
     this.setState({
-      query: value,
+      queryOrCategory: value,
     });
   };
 
-  onClick = async () => {
-    const { query } = this.state;
-    const { results } = await getProductsFromCategoryAndQuery(null, query);
+  doSearchByQuery = async () => {
+    const { queryOrCategory } = this.state;
+    const { results } = await getProductsFromQuery(queryOrCategory);
+    this.setState({
+      hasQueryInput: true,
+      searchResults: results,
+    });
+  };
+
+  doSearchByCategory = async () => {
+    const { queryOrCategory } = this.state;
+    const { results } = await getProductsFromCategory(queryOrCategory);
     this.setState({
       hasQueryInput: true,
       searchResults: results,
@@ -46,19 +55,22 @@ class Home extends React.Component {
     return (
       <div>
         <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
-        <Categories />
+        <Categories
+          getCategory={ this.getQueryOrCategory }
+          doSearch={ this.doSearchByCategory }
+        />
         <label htmlFor="busca">
           <input
             data-testid="query-input"
             type="text"
             id="busca"
-            onChange={ (event) => this.getQuery(event) }
+            onChange={ (event) => this.getQueryOrCategory(event) }
           />
         </label>
         <button
           data-testid="query-button"
           type="button"
-          onClick={ this.onClick }
+          onClick={ this.doSearchByQuery }
         >
           Buscar
         </button>

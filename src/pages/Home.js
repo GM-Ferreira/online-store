@@ -10,7 +10,7 @@ class Home extends React.Component {
     hasQueryInput: false,
   };
 
-  getQueryOrCategory = ({ target: { value } }) => {
+  getQuery = ({ target: { value } }) => {
     this.setState({
       queryOrCategory: value,
     });
@@ -27,6 +27,7 @@ class Home extends React.Component {
 
   doSearchByCategory = async () => {
     const { queryOrCategory } = this.state;
+    console.log(queryOrCategory);
     const { results } = await getProductsFromCategory(queryOrCategory);
     this.setState({
       hasQueryInput: true,
@@ -34,7 +35,19 @@ class Home extends React.Component {
     });
   };
 
+  handleRadioChange = (event) => {
+    console.log('chamei handleRadioChange');
+    const { target: { value } } = event;
+    this.setState({
+      queryOrCategory: value,
+    }, () => {
+      this.doSearchByCategory();
+    });
+    console.log('busquei por categoria');
+  };
+
   renderResults = () => {
+    console.log('renderizei os resultados da busca');
     const { searchResults } = this.state;
     if (searchResults.length > 0) {
       return searchResults
@@ -52,19 +65,19 @@ class Home extends React.Component {
 
   render() {
     const { hasQueryInput } = this.state;
+    console.log(' ------> RENDERIZANDO PAGINA');
     return (
       <div>
         <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
         <Categories
-          getCategory={ this.getQueryOrCategory }
-          doSearch={ this.doSearchByCategory }
+          handleRadioChange={ this.handleRadioChange }
         />
         <label htmlFor="busca">
           <input
             data-testid="query-input"
             type="text"
             id="busca"
-            onChange={ (event) => this.getQueryOrCategory(event) }
+            onChange={ (event) => this.getQuery(event) }
           />
         </label>
         <button
@@ -77,7 +90,6 @@ class Home extends React.Component {
         {
           hasQueryInput && this.renderResults()
         }
-
         { hasQueryInput ? null
           : (
             <p

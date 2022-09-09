@@ -9,7 +9,7 @@ class Cart extends React.Component {
     const results = localStorage.getItem('cartList');
     const data = JSON.parse(results);
     this.setState({
-      cartList: data,
+      cartList: data || [],
     });
   }
 

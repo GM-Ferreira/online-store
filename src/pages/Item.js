@@ -5,6 +5,7 @@ import { getProductById } from '../services/api';
 class Item extends React.Component {
   state = {
     product: {},
+    list: [],
   };
 
   async componentDidMount() {
@@ -13,12 +14,26 @@ class Item extends React.Component {
     this.setState({
       product: results,
     });
+    const data = localStorage.getItem('cartList');
+    const cartList = JSON.parse(data);
+    this.setState({
+      list: cartList || [],
+    });
   }
+
+  handleClick = () => {
+    const { product } = this.state;
+    this.setState((prevState) => ({
+      list: [...prevState.list, product],
+    }), () => {
+      const { list } = this.state;
+      localStorage.setItem('cartList', JSON.stringify(list));
+    });
+  };
 
   render() {
     const { product: { title, thumbnail, price } } = this.state;
     const { history } = this.props;
-
     return (
       <div>
         <h2 data-testid="product-detail-name">{title}</h2>
@@ -26,11 +41,18 @@ class Item extends React.Component {
         <span data-testid="product-detail-price">{`R$ ${price}`}</span>
         <br />
         <button
+          onClick={ this.handleClick }
+          type="button"
+          data-testid="product-detail-add-to-cart"
+        >
+          Adiciona ao Carrinho
+        </button>
+        <button
           onClick={ () => history.push('/cart') }
           type="button"
           data-testid="shopping-cart-button"
         >
-          Adicionar ao Carrinho
+          Carrinho
         </button>
       </div>
     );

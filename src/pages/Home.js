@@ -29,7 +29,6 @@ class Home extends React.Component {
 
   doSearchByCategory = async () => {
     const { queryOrCategory } = this.state;
-    console.log(queryOrCategory);
     const { results } = await getProductsFromCategory(queryOrCategory);
     this.setState({
       hasQueryInput: true,
@@ -38,14 +37,12 @@ class Home extends React.Component {
   };
 
   handleRadioChange = (event) => {
-    console.log('chamei handleRadioChange');
     const { target: { value } } = event;
     this.setState({
       queryOrCategory: value,
     }, () => {
       this.doSearchByCategory();
     });
-    console.log('busquei por categoria');
   };
 
   addToCart = (item) => {
@@ -58,7 +55,6 @@ class Home extends React.Component {
   };
 
   renderResults = () => {
-    console.log('renderizei os resultados da busca');
     const { searchResults } = this.state;
     if (searchResults.length > 0) {
       return searchResults

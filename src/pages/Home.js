@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Categories from '../components/Categories';
 import { getProductsFromQuery, getProductsFromCategory } from '../services/api';
+import CardItem from '../components/CardItem';
 
 class Home extends React.Component {
   state = {
@@ -52,12 +53,11 @@ class Home extends React.Component {
     if (searchResults.length > 0) {
       return searchResults
         .map((item) => (
-          <p
+          <CardItem
+            item={ item }
             data-testid="product"
             key={ item.id }
-          >
-            {item.title}
-          </p>
+          />
         ));
     }
     return <p>Nenhum produto foi encontrado</p>;
@@ -65,7 +65,7 @@ class Home extends React.Component {
 
   render() {
     const { hasQueryInput } = this.state;
-    console.log(' ------> RENDERIZANDO PAGINA');
+
     return (
       <div>
         <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>

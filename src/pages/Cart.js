@@ -5,6 +5,14 @@ class Cart extends React.Component {
     cartList: [],
   };
 
+  componentDidMount() {
+    const results = localStorage.getItem('cartList');
+    const data = JSON.parse(results);
+    this.setState({
+      cartList: data || [],
+    });
+  }
+
   render() {
     const { cartList } = this.state;
     return (
@@ -19,7 +27,13 @@ class Cart extends React.Component {
                 Seu carrinho está vazio
               </span>
             )
-            : null
+            : cartList.map((item) => (
+              <div key={ item.id }>
+                <h4 data-testid="shopping-cart-product-name">{ item.title }</h4>
+                <p>{ item.price }</p>
+                <p data-testid="shopping-cart-product-quantity"> Quantidade: 01 </p>
+              </div>
+            ))
         }
       </>
     );

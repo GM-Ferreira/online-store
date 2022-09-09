@@ -9,6 +9,7 @@ class Home extends React.Component {
     searchResults: [],
     queryOrCategory: '',
     hasQueryInput: false,
+    cartList: [],
   };
 
   getQuery = ({ target: { value } }) => {
@@ -47,17 +48,34 @@ class Home extends React.Component {
     console.log('busquei por categoria');
   };
 
+  addToCart = (item) => {
+    this.setState((prevState) => ({
+      cartList: [...prevState.cartList, item],
+    }), () => {
+      const { cartList } = this.state;
+      localStorage.setItem('cartList', JSON.stringify(cartList));
+    });
+  };
+
   renderResults = () => {
     console.log('renderizei os resultados da busca');
     const { searchResults } = this.state;
     if (searchResults.length > 0) {
       return searchResults
         .map((item) => (
-          <CardItem
-            item={ item }
-            data-testid="product"
-            key={ item.id }
-          />
+          <div key={ item.id }>
+            <CardItem
+              item={ item }
+              data-testid="product"
+            />
+            <button
+              type="button"
+              data-testid="product-add-to-cart"
+              onClick={ () => this.addToCart(item) }
+            >
+              Adicionar ao carrinho
+            </button>
+          </div>
         ));
     }
     return <p>Nenhum produto foi encontrado</p>;

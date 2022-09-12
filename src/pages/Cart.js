@@ -3,29 +3,31 @@ import React from 'react';
 class Cart extends React.Component {
   state = {
     cartList: [],
-    cartSet: [],
+    // cartSet: [],
   };
 
   componentDidMount() {
-    console.log('entrei no component did mount');
     const results = localStorage.getItem('cartList');
     const data = JSON.parse(results);
-    const dataId = data.map((item) => item.id);
-    const setId = new Set(dataId);
+    // const dataId = data?.map((item) => item.id);
+    // const setId = new Set(dataId);
     this.setState({
       cartList: data || [],
-      cartSet: [...setId],
+      // cartSet: [...setId],
     });
   }
 
   onDecrease = (item) => {
     const { cartList } = this.state;
-    const itemIndex = cartList.indexOf(item);
-    cartList.splice(itemIndex, 1);
-    this.setState({
-      cartList,
-    });
-    localStorage.setItem('cartList', JSON.stringify(cartList));
+    const qtd = this.countItems(item.id);
+    if (qtd !== 1) {
+      const itemIndex = cartList.indexOf(item);
+      cartList.splice(itemIndex, 1);
+      this.setState({
+        cartList,
+      });
+      localStorage.setItem('cartList', JSON.stringify(cartList));
+    }
   };
 
   onIncrease = (item) => {
@@ -40,17 +42,22 @@ class Cart extends React.Component {
   onRemove = (item) => {
     const { cartList } = this.state;
     const cartFilter = cartList.filter((e) => e.id !== item.id);
-    this.setState({ cartList: cartFilter });
     localStorage.setItem('cartList', JSON.stringify(cartFilter));
+    this.setState({
+      cartList: cartFilter,
+    });
   };
 
   countItems = (itemId) => {
     const { cartList } = this.state;
-    return cartList.filter((item) => item.id === itemId).length;
+    const qtd = (cartList.filter((item) => item.id === itemId).length);
+    // console.log(qtd);
+    return qtd;
   };
 
   render() {
-    const { cartList, cartSet } = this.state;
+    const { cartList } = this.state;
+    const cartSet = [...new Set(cartList.map((e) => e.id))];
     return (
       <>
         <h1>Carrinho</h1>
@@ -72,7 +79,6 @@ class Cart extends React.Component {
                   <p
                     data-testid="shopping-cart-product-quantity"
                   >
-                    Quantidade:
                     {this.countItems(item.id)}
                   </p>
                   <button

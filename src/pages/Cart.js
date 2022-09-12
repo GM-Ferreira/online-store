@@ -3,17 +3,17 @@ import React from 'react';
 class Cart extends React.Component {
   state = {
     cartList: [],
-    // cartSet: [],
+    cartSet: [],
   };
 
   componentDidMount() {
     const results = localStorage.getItem('cartList');
     const data = JSON.parse(results);
-    // const dataId = data?.map((item) => item.id);
-    // const setId = new Set(dataId);
+    const dataId = data?.map((item) => item.id);
+    const setId = new Set(dataId);
     this.setState({
       cartList: data || [],
-      // cartSet: [...setId],
+      cartSet: [...setId],
     });
   }
 
@@ -43,8 +43,10 @@ class Cart extends React.Component {
     const { cartList } = this.state;
     const cartFilter = cartList.filter((e) => e.id !== item.id);
     localStorage.setItem('cartList', JSON.stringify(cartFilter));
+    const atualSet = new Set(cartFilter.map((e) => e.id));
     this.setState({
       cartList: cartFilter,
+      cartSet: [...atualSet],
     });
   };
 
@@ -56,8 +58,7 @@ class Cart extends React.Component {
   };
 
   render() {
-    const { cartList } = this.state;
-    const cartSet = [...new Set(cartList.map((e) => e.id))];
+    const { cartList, cartSet } = this.state;
     return (
       <>
         <h1>Carrinho</h1>

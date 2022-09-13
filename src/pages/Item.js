@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 import ReviewForm from '../components/ReviewForm';
 import Review from '../components/Review';
+import Header from '../components/Header';
 
 class Item extends React.Component {
   state = {
@@ -85,9 +86,10 @@ class Item extends React.Component {
   render() {
     const { product: { title, thumbnail, price },
       email, comment, rate, reviews, hasReviews, error } = this.state;
-    const { history } = this.props;
+    // const { history } = this.props;
     return (
       <div>
+        <Header />
         <h2 data-testid="product-detail-name">{ title }</h2>
         <img data-testid="product-detail-image" src={ thumbnail } alt={ title } />
         <span data-testid="product-detail-price">{`R$ ${price}`}</span>
@@ -99,13 +101,13 @@ class Item extends React.Component {
         >
           Adiciona ao Carrinho
         </button>
-        <button
+        {/* <button
           onClick={ () => history.push('/cart') }
           type="button"
           data-testid="shopping-cart-button"
         >
           Carrinho
-        </button>
+        </button> */}
         <br />
         <h3> Avaliações </h3>
         <ReviewForm
@@ -133,9 +135,9 @@ Item.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
+  // history: PropTypes.shape({
+  //   push: PropTypes.func,
+  // }),
 }.isRequired;
 
 export default Item;

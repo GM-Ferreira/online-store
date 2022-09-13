@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import Header from '../components/Header';
 
 class Cart extends React.Component {
   state = {
@@ -63,6 +64,7 @@ class Cart extends React.Component {
     const { history } = this.props;
     return (
       <>
+        <Header />
         <h1>Carrinho</h1>
         {
           cartList.length === 0
@@ -78,6 +80,7 @@ class Cart extends React.Component {
               return (
                 <div key={ item.id }>
                   <h4 data-testid="shopping-cart-product-name">{ item.title }</h4>
+                  <img src={ item.thumbnail } alt={ item.title } />
                   <p>{ item.price }</p>
                   <button
                     onClick={ () => this.onDecrease(item) }

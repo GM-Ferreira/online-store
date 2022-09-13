@@ -103,6 +103,7 @@ export default class CheckoutForm extends React.Component {
             onChange={ this.onChange }
           />
           Boleto
+          <img src="https://img.icons8.com/external-flatart-icons-outline-flatarticons/50/000000/external-bar-code-shopping-flatart-icons-outline-flatarticons.png" alt="ticket" />
         </label>
         <label htmlFor="visa">
           <input
@@ -114,6 +115,7 @@ export default class CheckoutForm extends React.Component {
             onChange={ this.onChange }
           />
           Visa
+          <img src="https://img.icons8.com/ios/50/000000/visa.png" alt="visa" />
         </label>
         <label htmlFor="master">
           <input
@@ -125,6 +127,7 @@ export default class CheckoutForm extends React.Component {
             onChange={ this.onChange }
           />
           Master
+          <img src="https://img.icons8.com/ios-filled/50/000000/mastercard.png" alt="mastercard" />
         </label>
         <label htmlFor="elo">
           <input
@@ -136,6 +139,7 @@ export default class CheckoutForm extends React.Component {
             onChange={ this.onChange }
           />
           Elo
+          <img src="https://img.icons8.com/pastel-glyph/50/000000/bank-card-front-side--v1.png" alt="creditcard" />
         </label>
         <br />
         {

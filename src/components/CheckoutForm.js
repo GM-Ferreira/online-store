@@ -1,4 +1,7 @@
 import React from 'react';
+// import { Redirect } from 'react-router-dom';
+
+// import PropTypes from 'prop-types';
 
 export default class CheckoutForm extends React.Component {
   state = {
@@ -9,6 +12,7 @@ export default class CheckoutForm extends React.Component {
     postal: '',
     address: '',
     payment: '',
+    error: false,
   };
 
   onChange = ({ target }) => {
@@ -20,10 +24,30 @@ export default class CheckoutForm extends React.Component {
 
   onCheckout = () => {
     const { name, email, cpf, phone, postal, address, payment } = this.state;
-    // console.log(name, email, cpf, phone, postal, address, payment);
+    // const { history } = this.props;
+    if (name && email && cpf
+      && phone && postal && address && payment) {
+      this.setState({
+        name: '',
+        email: '',
+        cpf: '',
+        phone: '',
+        postal: '',
+        address: '',
+        payment: '',
+        error: false,
+      });
+      localStorage.clear();
+      // <Redirect to =''/>
+    } else {
+      this.setState({
+        error: true,
+      });
+    }
   };
 
   render() {
+    const { error } = this.state;
     return (
       <form>
         <p>Dados do Cliente:</p>
@@ -97,8 +121,11 @@ export default class CheckoutForm extends React.Component {
         <label htmlFor="master">
           <input
             data-testid="master-payment"
-            id="master"
-            type="radio"
+            id="masterCheckoutForm.propTypes = {
+              history: PropTypes.shape({
+                push: PropTypes.func,
+              }).isRequired,
+            };o"
             name="payment"
             value="Master"
             onChange={ this.onChange }
@@ -117,6 +144,9 @@ export default class CheckoutForm extends React.Component {
           Elo
         </label>
         <br />
+        {
+          error && <p data-testid="error-msg">Campos inválidos</p>
+        }
         <button
           data-testid="checkout-btn"
           type="button"
@@ -128,3 +158,9 @@ export default class CheckoutForm extends React.Component {
     );
   }
 }
+
+// CheckoutForm.propTypes = {
+//   history: PropTypes.shape({
+//     push: PropTypes.func,
+//   }).isRequired,
+// };

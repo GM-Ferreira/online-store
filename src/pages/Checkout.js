@@ -26,7 +26,13 @@ export default class Checkout extends React.Component {
             cartSet.map((id) => {
               const item = cart.find((e) => e.id === id);
               return (
-                <li key={ item.id }>{item.title}</li>
+                <li key={ item.id }>
+                  {item.title}
+                  {' '}
+                  - R$
+                  {' '}
+                  {item.price.toFixed(2)}
+                </li>
               );
             })
           }

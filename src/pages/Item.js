@@ -86,7 +86,7 @@ class Item extends React.Component {
   render() {
     const { product: { title, thumbnail, price },
       email, comment, rate, reviews, hasReviews, error } = this.state;
-    const { history } = this.props;
+    // const { history } = this.props;
     return (
       <div>
         <Header />
@@ -101,13 +101,13 @@ class Item extends React.Component {
         >
           Adiciona ao Carrinho
         </button>
-        <button
+        {/* <button
           onClick={ () => history.push('/cart') }
           type="button"
           data-testid="shopping-cart-button"
         >
           Carrinho
-        </button>
+        </button> */}
         <br />
         <h3> Avaliações </h3>
         <ReviewForm
@@ -135,9 +135,9 @@ Item.propTypes = {
       id: PropTypes.string,
     }),
   }),
-  history: PropTypes.shape({
-    push: PropTypes.func,
-  }),
+  // history: PropTypes.shape({
+  //   push: PropTypes.func,
+  // }),
 }.isRequired;
 
 export default Item;

@@ -21,22 +21,21 @@ export default class Checkout extends React.Component {
     const { cart, cartSet } = this.state;
     return (
       <>
-        <ul>
-          {
-            cartSet.map((id) => {
-              const item = cart.find((e) => e.id === id);
-              return (
-                <li key={ item.id }>
+        {
+          cartSet.map((id) => {
+            const item = cart.find((e) => e.id === id);
+            return (
+              <div key={ item.id }>
+                <p>
                   {item.title}
-                  {' '}
-                  - R$
-                  {' '}
-                  {item.price.toFixed(2)}
-                </li>
-              );
-            })
-          }
-        </ul>
+                </p>
+                <span>
+                  {item.price}
+                </span>
+              </div>
+            );
+          })
+        }
         <CheckoutForm />
       </>
     );

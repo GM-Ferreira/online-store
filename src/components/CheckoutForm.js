@@ -1,7 +1,5 @@
 import React from 'react';
-// import { Redirect } from 'react-router-dom';
-
-// import PropTypes from 'prop-types';
+import { Redirect } from 'react-router-dom';
 
 export default class CheckoutForm extends React.Component {
   state = {
@@ -13,6 +11,7 @@ export default class CheckoutForm extends React.Component {
     address: '',
     payment: '',
     error: false,
+    submit: false,
   };
 
   onChange = ({ target }) => {
@@ -24,7 +23,6 @@ export default class CheckoutForm extends React.Component {
 
   onCheckout = () => {
     const { name, email, cpf, phone, postal, address, payment } = this.state;
-    // const { history } = this.props;
     if (name && email && cpf
       && phone && postal && address && payment) {
       this.setState({
@@ -36,18 +34,17 @@ export default class CheckoutForm extends React.Component {
         address: '',
         payment: '',
         error: false,
+        submit: true,
       });
       localStorage.clear();
-      // <Redirect to =''/>
-    } else {
-      this.setState({
-        error: true,
-      });
     }
+    this.setState({
+      error: true,
+    });
   };
 
   render() {
-    const { error } = this.state;
+    const { error, submit } = this.state;
     return (
       <form>
         <p>Dados do Cliente:</p>
@@ -121,11 +118,8 @@ export default class CheckoutForm extends React.Component {
         <label htmlFor="master">
           <input
             data-testid="master-payment"
-            id="masterCheckoutForm.propTypes = {
-              history: PropTypes.shape({
-                push: PropTypes.func,
-              }).isRequired,
-            };o"
+            id="master"
+            type="radio"
             name="payment"
             value="Master"
             onChange={ this.onChange }
@@ -154,13 +148,8 @@ export default class CheckoutForm extends React.Component {
         >
           Finalizar
         </button>
+        { submit && <Redirect to="/" />}
       </form>
     );
   }
 }
-
-// CheckoutForm.propTypes = {
-//   history: PropTypes.shape({
-//     push: PropTypes.func,
-//   }).isRequired,
-// };

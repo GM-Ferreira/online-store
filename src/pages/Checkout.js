@@ -1,5 +1,6 @@
 import React from 'react';
 import CheckoutForm from '../components/CheckoutForm';
+import Header from '../components/Header';
 
 export default class Checkout extends React.Component {
   state = {
@@ -21,6 +22,7 @@ export default class Checkout extends React.Component {
     const { cart, cartSet } = this.state;
     return (
       <>
+        <Header />
         {
           cartSet.map((id) => {
             const item = cart.find((e) => e.id === id);
@@ -29,6 +31,7 @@ export default class Checkout extends React.Component {
                 <p>
                   {item.title}
                 </p>
+                <img src={ item.thumbnail } alt={ item.title } />
                 <span>
                   {item.price}
                 </span>

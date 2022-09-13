@@ -1,8 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 import Categories from '../components/Categories';
 import { getProductsFromQuery, getProductsFromCategory } from '../services/api';
 import CardItem from '../components/CardItem';
+import Header from '../components/Header';
 
 class Home extends React.Component {
   state = {
@@ -59,12 +60,13 @@ class Home extends React.Component {
     if (searchResults.length > 0) {
       return searchResults
         .map((item) => (
-          <div key={ item.id }>
+          <div key={ item.id } className="home-div-card-center">
             <CardItem
               item={ item }
               data-testid="product"
             />
             <button
+              className="button-add-cart"
               type="button"
               data-testid="product-add-to-cart"
               onClick={ () => this.addToCart(item) }
@@ -79,39 +81,47 @@ class Home extends React.Component {
 
   render() {
     const { hasQueryInput } = this.state;
-
     return (
       <div>
-        <Link to="/Cart" data-testid="shopping-cart-button">Carrinho</Link>
-        <Categories
-          handleRadioChange={ this.handleRadioChange }
-        />
-        <label htmlFor="busca">
-          <input
-            data-testid="query-input"
-            type="text"
-            id="busca"
-            onChange={ (event) => this.getQuery(event) }
-          />
-        </label>
-        <button
-          data-testid="query-button"
-          type="button"
-          onClick={ this.doSearchByQuery }
-        >
-          Buscar
-        </button>
-        {
-          hasQueryInput && this.renderResults()
-        }
-        { hasQueryInput ? null
-          : (
-            <p
-              data-testid="home-initial-message"
-            >
-              Digite algum termo de pesquisa ou escolha uma categoria.
-            </p>
-          )}
+        <Header />
+        <header>
+          <label htmlFor="busca">
+            <input
+              placeholder="Estou procurando..."
+              data-testid="query-input"
+              type="text"
+              id="busca"
+              onChange={ (event) => this.getQuery(event) }
+            />
+          </label>
+          <button
+            data-testid="query-button"
+            type="button"
+            onClick={ this.doSearchByQuery }
+          >
+            Buscar
+          </button>
+        </header>
+        <section className="main-main">
+          <aside>
+            <Categories
+              handleRadioChange={ this.handleRadioChange }
+            />
+          </aside>
+          <main className="render-products">
+            {
+              hasQueryInput && this.renderResults()
+            }
+            { hasQueryInput ? null
+              : (
+                <p
+                  data-testid="home-initial-message"
+                >
+                  Digite algum termo de pesquisa ou escolha uma categoria.
+                </p>
+              )}
+          </main>
+        </section>
       </div>
     );
   }

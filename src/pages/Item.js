@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { getProductById } from '../services/api';
 import ReviewForm from '../components/ReviewForm';
 import Review from '../components/Review';
+import Header from '../components/Header';
 
 class Item extends React.Component {
   state = {
@@ -88,6 +89,7 @@ class Item extends React.Component {
     const { history } = this.props;
     return (
       <div>
+        <Header />
         <h2 data-testid="product-detail-name">{ title }</h2>
         <img data-testid="product-detail-image" src={ thumbnail } alt={ title } />
         <span data-testid="product-detail-price">{`R$ ${price}`}</span>

@@ -4,11 +4,12 @@ import Home from './pages/Home';
 import Cart from './pages/Cart';
 import Item from './pages/Item';
 import Checkout from './pages/Checkout';
+import './App.css';
 
 class App extends React.Component {
   render() {
     return (
-      <div>
+      <div className="app">
         <BrowserRouter>
           <Route exact path="/" component={ Home } />
           <Route exact path="/Cart" component={ Cart } />

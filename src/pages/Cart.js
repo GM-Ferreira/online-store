@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Cart extends React.Component {
   state = {
@@ -59,6 +60,7 @@ class Cart extends React.Component {
 
   render() {
     const { cartList, cartSet } = this.state;
+    const { history } = this.props;
     return (
       <>
         <h1>Carrinho</h1>
@@ -77,11 +79,6 @@ class Cart extends React.Component {
                 <div key={ item.id }>
                   <h4 data-testid="shopping-cart-product-name">{ item.title }</h4>
                   <p>{ item.price }</p>
-                  <p
-                    data-testid="shopping-cart-product-quantity"
-                  >
-                    {this.countItems(item.id)}
-                  </p>
                   <button
                     onClick={ () => this.onDecrease(item) }
                     type="button"
@@ -89,6 +86,11 @@ class Cart extends React.Component {
                   >
                     -
                   </button>
+                  <span
+                    data-testid="shopping-cart-product-quantity"
+                  >
+                    {this.countItems(item.id)}
+                  </span>
                   <button
                     onClick={ () => this.onIncrease(item) }
                     type="button"
@@ -108,9 +110,23 @@ class Cart extends React.Component {
               );
             })
         }
+        <br />
+        <button
+          data-testid="checkout-products"
+          type="button"
+          onClick={ () => history.push('/Checkout') }
+        >
+          Finalizar compra
+        </button>
       </>
     );
   }
 }
+
+Cart.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
+};
 
 export default Cart;
